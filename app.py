@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from surprise import NMF, Dataset, Reader
 from scipy.stats import hmean 
-
+import os
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = "super secret key"
@@ -90,6 +90,7 @@ def main():
 
         return(render_template('main.html', settings = {'showVote': False, 'people': 0, 'buttonDisable': False, 'recommendation': None}))
     
-
 if __name__ == '__main__':
-    app.run()
+    # Bind to PORT if defined, otherwise default to 5000.
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
