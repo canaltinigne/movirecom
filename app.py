@@ -59,6 +59,7 @@ def main():
         
         if 'run-model' in request.form:
             pu = recommendation(session['arr'], session['members'], session['movieIds'])
+            session.clear()
             session['counter'] = -1
             session['members'] = 0
             session['movieIds'] = [int(x) for x in (np.random.choice(movies_[-200:], 15, replace=False))]
@@ -80,6 +81,7 @@ def main():
                 return(render_template('main.html', settings = {'showVote': True, 'people': len(request.form), 'buttonDisable': True, 'recommendation': None}))
 
     elif request.method == 'GET':
+        session.clear()
         session['counter'] = -1
         session['members'] = 0
         session['movieIds'] = [int(x) for x in (np.random.choice(movies_[-200:], 15, replace=False))]
@@ -90,5 +92,4 @@ def main():
     
 
 if __name__ == '__main__':
-    session.clear()
     app.run()
